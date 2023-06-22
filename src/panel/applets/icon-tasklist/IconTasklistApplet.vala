@@ -50,6 +50,7 @@ public class IconTasklistSettings : Gtk.Grid {
 
 public class IconTasklistApplet : Budgie.Applet {
 	private Budgie.Abomination.Abomination? abomination = null;
+	private Budgie.Windowing.Windowing windowing;
 	private Wnck.Screen? wnck_screen = null;
 	private Settings? settings = null;
 	private Gtk.Box? main_layout = null;
@@ -95,6 +96,7 @@ public class IconTasklistApplet : Budgie.Applet {
 		this.wnck_screen = Wnck.Screen.get_default();
 		this.abomination = new Budgie.Abomination.Abomination();
 		this.app_system = new Budgie.AppSystem();
+		this.windowing = new Budgie.Windowing.Windowing();
 
 		/* Now hook up settings */
 		this.settings.changed.connect(this.on_settings_changed);
@@ -174,9 +176,9 @@ public class IconTasklistApplet : Budgie.Applet {
 			if (!button.pinned) {
 				wrapper.gracefully_die();
 			} else {
-				// the button that we were going to replace is pinned, so instead of removing it from the view, 
+				// the button that we were going to replace is pinned, so instead of removing it from the view,
 				// just remove its class group and first app, then update it visually. this prevents apps like
-				// the LibreOffice launcher from vanishing after a document is opened, despite being pinned 
+				// the LibreOffice launcher from vanishing after a document is opened, despite being pinned
 				button.set_class_group(null);
 				button.first_app = null;
 				button.update();
